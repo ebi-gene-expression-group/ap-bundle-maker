@@ -32,6 +32,7 @@ def main():
 
     args = arg_parser.parse_args()
 
+    # Pattern to extract resolution value from clusters file residing in clusters-path, supports integer or floats res.
     clusters_file_pat = re.compile(r'clusters_resolution_(?P<resolution>\d+\.?\d*).tsv')
 
     clusters_to_res = {}
@@ -71,7 +72,7 @@ def main():
     print("Cell clusters has {} entries".format(len(cells_clusters)))
     # Write the complete clusters file in order
     clusters_output = open(args.output_dir + "/clusters_for_bundle.txt", mode="w")
-    clusters_output.write("sel.clusters\tclusters\t"+"\t".join(sorted(cells_set))+"\n")
+    clusters_output.write("sel.K\tK\t"+"\t".join(sorted(cells_set))+"\n")
     for k, cluster_assignment in sorted(cells_clusters.items()):
         selected = 'TRUE' if float(clusters_to_res[k]) == 1.0 else 'FALSE'
         clusters_output.write("\t".join([selected, str(k)]))
